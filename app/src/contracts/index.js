@@ -3,11 +3,11 @@
 import contract from 'truffle-contract';
 
 // import artifacts
-import contractArtifacts from '../../../build/contracts/Contract.json';
+import dummyContractArtifacts from '../../../build/contracts/DummyContract.json';
 
 // create contracts
-const Contract = contract(contractArtifacts);
+const DummyContract = contract(dummyContractArtifacts);
 
 export {
-  Contract,
+  DummyContract,
 };

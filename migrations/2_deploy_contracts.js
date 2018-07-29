@@ -1,6 +1,6 @@
 /* global artifacts:true */
-const Contract = artifacts.require('./Contract.sol');
+const DummyContract = artifacts.require('./DummyContract.sol');
 
 module.exports = (deployer) => {
-  deployer.deploy(Contract);
+  deployer.deploy(DummyContract);
 };

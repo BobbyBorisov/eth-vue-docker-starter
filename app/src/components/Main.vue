@@ -6,8 +6,9 @@
       <h3 v-if='!account'><strong>PLEASE LOGIN TO MetaMask</strong></h3>
 
       <template v-if='account'>
-        <p>My account balance: <strong>{{ balance }} ETH</strong></p>
-        <p>My account address: <strong>{{ account }}</strong></p>
+        <p>Account balance: <strong>{{ balance }} ETH</strong></p>
+        <p>Account address: <strong>{{ account }}</strong></p>
+        <p>Owner address: <strong>{{ owner }}</strong></p>
       </template>
 
     </section>
@@ -24,6 +25,7 @@ export default {
     ...mapGetters({
       account: 'account',
       balance: 'balance',
+      owner: 'owner'
     }),
   },
   methods: {

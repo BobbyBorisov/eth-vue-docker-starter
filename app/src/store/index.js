@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 import Web3 from 'web3';
 import createLogger from 'vuex/dist/logger';
 import * as types from './mutation-types';
-import {Contract} from '../contracts';
+import {DummyContract} from '../contracts';
 
 Vue.use(Vuex);
 
@@ -13,11 +13,13 @@ const debug = process.env.NODE_ENV !== 'production';
 const rootState = {
   account: '',
   balance: '',
+  owner: '',
 };
 
 const getters = {
   account: state => state.account,
   balance: state => state.balance,
+  owner: state => state.owner,
 };
 
 const actions = {
@@ -28,6 +30,7 @@ const actions = {
         clearInterval(web3RetryInterval);
         dispatch('watchWeb3Account');
         dispatch('setContractProvider');
+        dispatch('getOwner');
       }
     }, 100);
   },
@@ -45,7 +48,7 @@ const actions = {
     }, 600);
   },
   setContractProvider() {
-      Contract.setProvider(web3.currentProvider);
+      DummyContract.setProvider(web3.currentProvider);
   },
   getBalance({commit, state}, blockNumber = 'latest') {
     web3.eth.getBalance(state.account, blockNumber, (err, result) => {
@@ -57,6 +60,13 @@ const actions = {
       commit(types.UPDATE_BALANCE, web3.fromWei(result).toNumber());
     });
   },
+  getOwner({commit, state}) {
+    DummyContract.deployed().then(async (instance) => {
+      const owner = await instance.owner.call()
+      commit(types.SET_OWNER, owner);
+    });
+  },
+}
 
 const mutations = {
   [types.ROUTE_CHANGED](state, {to, from}) {
@@ -70,6 +80,10 @@ const mutations = {
 
   [types.UPDATE_BALANCE](state, balance) {
     state.balance = balance;
+  },
+
+  [types.SET_OWNER](state, owner) {
+    state.owner = owner;
   },
 };
 
