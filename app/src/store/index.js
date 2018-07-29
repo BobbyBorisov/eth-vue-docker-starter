@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 import Web3 from 'web3';
 import createLogger from 'vuex/dist/logger';
 import * as types from './mutation-types';
-import {Betting} from '../contracts';
+import {Contract} from '../contracts';
 
 Vue.use(Vuex);
 
@@ -45,7 +45,7 @@ const actions = {
     }, 600);
   },
   setContractProvider() {
-      Betting.setProvider(web3.currentProvider);
+      Contract.setProvider(web3.currentProvider);
   },
   getBalance({commit, state}, blockNumber = 'latest') {
     web3.eth.getBalance(state.account, blockNumber, (err, result) => {

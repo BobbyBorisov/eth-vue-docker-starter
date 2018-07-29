@@ -7,7 +7,7 @@
 
       <template v-if='account'>
         <p>My account balance: <strong>{{ balance }} ETH</strong></p>
-        <p>My account address: <strong>{{ account }} ETH</strong></p>
+        <p>My account address: <strong>{{ account }}</strong></p>
       </template>
 
     </section>
@@ -19,10 +19,7 @@ import { mapGetters } from 'vuex';
 import * as types from '../store/mutation-types';
 
 export default {
-  name: 'bet-app',
-  created() {
-    // this.$store.dispatch('watchTime');
-  },
+  name: 'eth-vue-docker-app',
   computed: {
     ...mapGetters({
       account: 'account',
