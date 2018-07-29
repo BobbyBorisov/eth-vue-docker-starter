@@ -1,0 +1,27 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      # Needs to be same port for hot reload to work
+      - 8080:8080
+    command: bash -c "yarn && truffle migrate --network development --reset && npm run dev"
+    working_dir: /webapp
+    volumes:
+      - ".:/webapp"
+    environment:
+      # Needs to be set to 0.0.0.0
+      - HOST=0.0.0.0
+      - PORT=8080
+    networks:
+      - blockchain
+  ganache:
+    image: trufflesuite/ganache-cli
+    entrypoint: node ./build/cli.node.js -h 0.0.0.0
+    ports:
+       - 8545:8545
+    networks:
+      - blockchain
+networks:
+    blockchain:
+        driver: "bridge"
